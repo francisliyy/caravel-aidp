@@ -1,22 +1,34 @@
 *.pyc
+yarn-error.log
+_modules
+superset/assets/coverage/*
 changelog.sh
 .DS_Store
 .coverage
 _build
 _static
 _images
-caravel/bin/caravelc
+_modules
+superset/bin/supersetc
 env_py3
 .eggs
 build
 *.db
 tmp
+<<<<<<< HEAD
 #caravel_config.py
 local_config.py
 env
 /dist/
 /caravel/assets/dist
 caravel.egg-info/
+=======
+superset_config.py
+local_config.py
+env
+dist
+superset.egg-info/
+>>>>>>> airbnb/master
 app.db
 *.bak
 .idea
@@ -29,7 +41,11 @@ app.db
 !/caravel/assets/node_modules/font-awesome
 !/caravel/assets/node_modules/echarts-2.2.7
 npm-debug.log
+<<<<<<< HEAD
 .pydevproject
 .project
 .settings/
 /caravel/app/static/uploads/*
+=======
+yarn.lock
+>>>>>>> airbnb/master
