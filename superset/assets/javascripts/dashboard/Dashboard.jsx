@@ -34,6 +34,27 @@ export function getInitialState(dashboardData, context) {
   return state;
 }
 
+function injectCss(className, css) {
+  const head = document.head || document.getElementsByTagName('head')[0];
+  let style = document.querySelector('.' + className);
+
+  if (!style) {
+    if (className.split(' ').length > 1) {
+      throw new Error('This method only supports selections with a single class name.');
+    }
+    style = document.createElement('style');
+    style.className = className;
+    style.type = 'text/css';
+    head.appendChild(style);
+  }
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.innerHTML = css;
+  }
+}
+
 function unload() {
   const message = 'You have unsaved changes.';
   window.event.returnValue = message; // Gecko + IE
@@ -67,6 +88,8 @@ function initDashboardView(dashboard,readonly) {
       <Header dashboard={dashboard} />,
       document.getElementById('dashboard-header')
     );
+  }else{
+    injectCss('CssEditor-css',$('.dashboard').data('context')['css_jinja']);
   }
   
   // eslint-disable-next-line no-param-reassign

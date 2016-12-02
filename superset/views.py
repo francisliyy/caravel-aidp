@@ -2058,6 +2058,7 @@ class Superset(BaseSupersetView):
             dash_edit_perm=dash_edit_perm,
             standalone_mode=standalone,
             url_params=json.dumps(url_params_multidict),
+            css_jinja = dash.css_jinja
         )
         return self.render_template(
             "superset/dashboard.html",
@@ -2113,6 +2114,7 @@ class Superset(BaseSupersetView):
             dash_edit_perm=True,
             standalone_mode=standalone,
             url_params=json.dumps(url_params_multidict),
+            css_jinja = dash.css_jinja
         )
 
         return self.render_template(

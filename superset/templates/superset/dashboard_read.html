@@ -8,13 +8,13 @@
 {% endblock %}
 {% block title %}[dashboard] {{ dashboard.dashboard_title }}{% endblock %}
 {% block body %}
-
 <div
   class="dashboard container-fluid"
   data-dashboard="{{ dashboard.json_data }}"
   data-context="{{ context }}"
   data-readonly="true"
 >
+
   {% include 'superset/flash_wrapper.html' %}
   <div id="dashboard-header"></div>
 

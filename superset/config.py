@@ -249,11 +249,11 @@ JINJA_CONTEXT_ADDONS = {}
 # by humans.
 ROBOT_PERMISSION_ROLES = ['Public', 'Gamma', 'Alpha', 'Admin', 'sql_lab']
 
-RES_PATH = 'http://192.168.0.36:8088'
+RES_PATH = 'http://192.168.107.130:8088/resourcemodelview/download'
 
 try:
     from superset_config import *  # noqa
-    print('Loaded your LOCAL configuration')
+    print('=========Loaded your LOCAL configuration=========')
 except ImportError:
     pass
 

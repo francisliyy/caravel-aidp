@@ -18,7 +18,7 @@ class Controls extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      css: props.dashboard.css,
+      css: props.dashboard.context.css_jinja,
       cssTemplates: [],
     };
   }
@@ -73,7 +73,7 @@ class Controls extends React.PureComponent {
           triggerNode={
             <i className="fa fa-css3" />
           }
-          initialCss={dashboard.css}
+          initialCss={dashboard.context.css_jinja}
           templates={this.state.cssTemplates}
           onChange={this.changeCss.bind(this)}
         />
