@@ -443,7 +443,8 @@ class Dashboard(Model, AuditMixinNullable, ImportMixin):
 
     @property
     def css_jinja(self):
-        return self.css.replace("{{RES_PATH}}",config.get('RES_PATH'));
+        css_jinja = self.css if self.css else ''
+        return css_jinja.replace("{{RES_PATH}}",config.get('RES_PATH'));
 
     @property
     def url(self):
