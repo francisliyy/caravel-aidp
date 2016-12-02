@@ -9,23 +9,29 @@ function Ec3MapWidget(slice) {
         const fd = payload.form_data;
         const selected_areas = fd.aiec3_map_default_area?JSON.parse(fd.aiec3_map_default_area):[];
         let chart_options = ec3barline(slice).getOptions(payload);
-        if(!chart_options.series[0].data||chart_options.series[0].data.length==0){
-          chart_options.series[0].data=[];
-          selected_areas.map((iName)=>{
-            let aData = {};
-            aData.name = iName;
-            aData.selected = true;
-            chart_options.series[0].data.push(aData);
-          });
-        }else{
-          chart_options.series.map((elem)=>{
-            elem.data.map((dItem)=>{
-              if($.inArray(dItem.name, selected_areas)>=0){
-                dItem.selected=true;
-              }
+        let eindex=0;
+        if (!fd.aiec3_map_interval||parseInt(fd.aiec3_map_interval)<=0) {
+
+          if(!chart_options.series[0].data||chart_options.series[0].data.length==0){
+            chart_options.series[0].data=[];
+            selected_areas.map((iName)=>{
+              let aData = {};
+              aData.name = iName;
+              aData.selected = true;
+              chart_options.series[0].data.push(aData);
+            });
+          }else{
+            chart_options.series.map((elem)=>{
+              elem.data.map((dItem)=>{
+                if($.inArray(dItem.name, selected_areas)>=0){
+                  dItem.selected=true;
+                }
+              })
             })
-          })
+          }
+
         }
+        
         
         //regist the custom map type
         var ec3_map_type = fd.aiec3_map_type||'svg';
@@ -55,18 +61,12 @@ function Ec3MapWidget(slice) {
         }
         let chart = echarts.init(document.getElementById(slice.containerId));
         chart.setOption(chart_options);
-
         //TODO support multi series
-        let c = 0;
+        
         function showTip() {
           console.log('call showTip...');
-          if(c==0){
-            chart_options.series[0].data.map((item) => {
-              item.selected = false;
-            });
-            chart.setOption(chart_options);
-          }
-          let areaName = chart_options.series[0].data[c].name;
+          let areaName = chart_options.series[0].data[eindex].name;
+          console.log("eindex:"+eindex+",areaName:"+areaName+",length:"+chart_options.series[0].data.length);
           chart.component.tooltip.showTip({seriesIndex: 0, name: areaName});
           if (fd.aiec3_map_connected) {
             let vals = []
@@ -75,11 +75,12 @@ function Ec3MapWidget(slice) {
               slice.setFilter(fd.aiec3_map_connect_field, vals);
             }
           }
-          c = c + 1 >= chart_options.series[0].data.length ? 0 : c + 1;
+          eindex=eindex+1>=chart_options.series[0].data.length?0:eindex+1;
+          console.log('eindex:'+eindex);
         }
 
-        if (fd.aiec3_map_interval > 0) {
-          setInterval(showTip, fd.aiec3_map_interval*1000);
+        if (parseInt(fd.aiec3_map_interval) > 0) {          
+          setInterval(showTip, parseInt(fd.aiec3_map_interval)*1000);
         } else if (fd.aiec3_map_connected){
           chart.on('click', function (param){
             console.log('click params: ' + JSON.stringify(param));
